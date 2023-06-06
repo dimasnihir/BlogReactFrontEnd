@@ -45,14 +45,9 @@ export default function DefaultLayout() {
 		<>
 			<nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 dark:bg-gray-900">
 				<div className="container flex flex-wrap items-center justify-between mx-auto">
-					<a href="https://dcodemania.com/" className="flex items-center">
-						<img
-							src="https://dcodemania.com/img/logo.svg"
-							className="h-6 mr-3 sm:h-9"
-							alt="DCodeMania Logo"
-						/>
+					<a href="/blog" className="flex items-center">
 						<span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-							DCodeMania
+							Блог
 						</span>
 					</a>
 					<button
@@ -84,34 +79,22 @@ export default function DefaultLayout() {
 											? 'block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white'
 											: 'block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0 dark:text-gray-400 md:dark:hover:text-white'
 									}>
-									Profile
+									Профиль
 								</NavLink>
 							</li>
-							<li>
-								<NavLink
-									to="/about"
-									className={({ isActive }) =>
-										isActive
-											? 'block py-2 pl-3 pr-4 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white'
-											: 'block py-2 pl-3 pr-4 rounded md:bg-transparent md:p-0 dark:text-gray-400 md:dark:hover:text-white'
-									}>
-									About
-								</NavLink>
-							</li>
-
 							<li>
 								<a
 									onClick={handleLogout}
 									href="#"
 									className="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
-									Logout
+									Выйти
 								</a>
 							</li>
 						</ul>
 					</div>
 				</div>
 			</nav>
-			<main className="container flex justify-center flex-col items-center mt-10">
+			<main className="container flex items-center flex-col  mt-10 mx-auto">
 				<Outlet />
 			</main>
 		</>
