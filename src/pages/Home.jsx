@@ -1,50 +1,55 @@
 import React from 'react';
 import Post from '../components/PreviewPost';
-
+import { Pagination, PaginationItem } from '@mui/material';
 import {useState , useEffect} from 'react';
 import axios from '../axios';
 import PreviewPost from '../components/PreviewPost';
+import { Link, NavLink } from 'react-router-dom';
 
 export default function Home() {
-    const [data, setData] = useState();
+    const [posts, setPosts] = useState();
+    const [query, setQuery] = useState('react');
+    const [page, setPage] = useState(1);
+    const [pageQty, setPageQty] = useState(0)
+
 
     useEffect(() => {
 		(async () => {
-			try {
-				const resp = await axios.get('/posts');
-				if (resp.status === 200) {
-					setData(resp.data.data)
-				}
-			} catch (error) {
-				if (error.response.status === 401) {					return(
-                        <>
-                            <p>
-                                Произошла ошибка
-                            </p>
-                        </>
-                    );
-
-				}
-			}
+            const queryParameters = new URLSearchParams(window.location.search)
+            const page = queryParameters.get("page")
+				await axios.get(`/posts?page=${page || 1}`).then(
+                    ({data}) => {
+                        console.log(data);
+                        setPosts(data.data);
+                        setPage(data.meta.current_page);
+                        setPageQty(data.meta.last_page);
+                    }
+                );
 		})();
-	}, []);
+	}, [page ]);
 
-    if(Array.isArray(data)){
+    if(Array.isArray(posts)){
         return(
             <>
-                {data.map((item) => <PreviewPost title={item.title} content={item.content}/>)}
+                {posts.map((item) => <PreviewPost title={item.title} content={item.content}/>)}
                 <Pagination
-                currentPage={19}
-                onPageChange={1}
-                totalPages={100}
+                    count={10}
+                    page={page}
+                    onChange={(_, num) => setPage(num)}
+                    renderItem={(item) => (
+                        <PaginationItem
+                            component={Link}
+                            to={`?page=${item.page}`}
+                            {...item}
+                        />
+                    )}
                 />
-            </>
-            
+            </>   
         )
     }
     return(
         <>
-            aa
+            загрузка....
         </>
     )
 

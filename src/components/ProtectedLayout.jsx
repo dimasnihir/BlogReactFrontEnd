@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useSearchParams } from 'react-router-dom';
 import axios from '../axios';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -12,9 +12,11 @@ export default function DefaultLayout() {
 		(async () => {
 			try {
 				const resp = await axios.get('/user');
-				if (resp.status === 200) {
+				
+				
+				
 					setUser(resp.data.data);
-				}
+				
 			} catch (error) {
 				if (error.response.status === 401) {
 					localStorage.removeItem('user');
@@ -45,11 +47,12 @@ export default function DefaultLayout() {
 		<>
 			<nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 dark:bg-gray-900">
 				<div className="container flex flex-wrap items-center justify-between mx-auto">
-					<a href="/blog" className="flex items-center">
-						<span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-							Блог
-						</span>
-					</a>
+					<NavLink
+						to={'/blog'}
+						className={' text-xl font-semibold whitespace-nowrap dark:text-white'}
+					>
+						Блог
+					</NavLink>
 					<button
 						data-collapse-toggle="navbar-default"
 						type="button"
